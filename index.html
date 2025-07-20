@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ariel's Jewelry - Chat Support</title>
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+    <style>
+        /* Custom styling for Ariel's Jewelry brand */
+        :root {
+            /* Primary brand colors - Ariel's Jewelry official colors */
+            --chat--color-primary: #001489; /* Ariel's official blue */
+            --chat--color-primary-shade-50: #001366;
+            --chat--color-primary-shade-100: #001044;
+            --chat--color-secondary: #C9A961; /* Elegant gold */
+            --chat--color-secondary-shade-50: #B8963E;
+            
+            /* Neutral colors */
+            --chat--color-white: #ffffff;
+            --chat--color-light: #f8f8f8;
+            --chat--color-light-shade-50: #f0f0f0;
+            --chat--color-light-shade-100: #e8e8e8;
+            --chat--color-medium: #d5d5d5;
+            --chat--color-dark: #1a1a1a;
+            --chat--color-disabled: #888888;
+            --chat--color-typing: #555555;
+
+            /* Layout */
+            --chat--spacing: 1rem;
+            --chat--border-radius: 8px;
+            --chat--transition-duration: 0.3s;
+
+            /* Window dimensions - ajustado para pantalla completa */
+            --chat--window--width: 100%;
+            --chat--window--height: 100%;
+
+            /* Header styling */
+            --chat--header-height: auto;
+            --chat--header--padding: 1.5rem 1rem;
+            --chat--header--background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-primary-shade-50) 100%);
+            --chat--header--color: var(--chat--color-white);
+            --chat--header--border-top: none;
+            --chat--header--border-bottom: 3px solid var(--chat--color-secondary);
+            --chat--heading--font-size: 1.5em;
+            --chat--subtitle--font-size: 0.9em;
+            --chat--subtitle--line-height: 1.6;
+
+            /* Input area */
+            --chat--textarea--height: 60px;
+
+            /* Messages */
+            --chat--message--font-size: 0.95rem;
+            --chat--message--padding: 1rem;
+            --chat--message--border-radius: 12px;
+            --chat--message-line-height: 1.6;
+            
+            /* Bot messages */
+            --chat--message--bot--background: var(--chat--color-white);
+            --chat--message--bot--color: var(--chat--color-dark);
+            --chat--message--bot--border: 1px solid var(--chat--color-light-shade-100);
+            
+            /* User messages */
+            --chat--message--user--background: var(--chat--color-secondary);
+            --chat--message--user--color: var(--chat--color-white);
+            --chat--message--user--border: none;
+            
+            /* Code blocks */
+            --chat--message--pre--background: rgba(0, 0, 0, 0.05);
+
+            /* Toggle button */
+            --chat--toggle--background: var(--chat--color-secondary);
+            --chat--toggle--hover--background: var(--chat--color-secondary-shade-50);
+            --chat--toggle--active--background: #A8853A;
+            --chat--toggle--color: var(--chat--color-white);
+            --chat--toggle--size: 70px;
+        }
+
+        /* Additional custom styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Logo styling */
+        .chat-header-logo {
+            width: 50px;
+            height: 50px;
+            margin-right: 12px;
+            border-radius: 6px;
+            object-fit: contain;
+            background: white;
+            padding: 4px;
+        }
+
+        /* Brand header with logo */
+        .brand-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #001489 0%, #001366 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 20, 137, 0.3);
+        }
+
+        .brand-logo {
+            width: 120px;
+            height: 120px;
+            margin-right: 15px;
+            object-fit: contain;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        /* Asegurar que el chat de pantalla completa funcione correctamente */
+        #n8n-chat {
+            width: 100% !important;
+            height: 600px !important;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+        }
+
+        /* Elegant typography for jewelry brand */
+        .n8n-chat-title {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .n8n-chat-subtitle {
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* Sparkle animation for luxury feel */
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        .chat-sparkle {
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        /* Voice recording button styles */
+        .voice-recorder {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .voice-btn {
+            background: var(--chat--color-secondary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 20px;
+        }
+
+        .voice-btn:hover {
+            background: var(--chat--color-secondary-shade-50);
+            transform: scale(1.05);
+        }
+
+        .voice-btn.recording {
+            background: #e74c3c;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .voice-status {
+            font-size: 12px;
+            color: var(--chat--color-dark);
+            margin-left: 10px;
+        }
+
+        .audio-player {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: var(--chat--color-light);
+            border-radius: 8px;
+            margin: 5px 0;
+        }
+
+        .audio-controls {
+            display: flex;
+            gap: 5px;
+        }
+
+        .audio-controls button {
+            background: var(--chat--color-secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+        <!-- Brand Header with Logo -->
+        <div class="brand-header">
+            <img src="https://arielsjewelry.com/cdn/shop/files/Ariel_s_Logo_small_11ae5a6a-ab2d-4a42-b5ac-c069070394bf.jpg?v=1690913917&width=220" 
+                 alt="Ariel's Jewelry Logo" 
+                 class="brand-logo"
+                 style="margin: 0;">
+        </div>
+        
+        <div style="text-align: center; margin-bottom: 40px; color: #555;">
+            <p style="font-size: 1.2em; margin-bottom: 10px;">Experimenta joyería de lujo con asistencia personalizada</p>
+            <p style="font-size: 1em; opacity: 0.8;">El chat está listo para comenzar - escribe tu consulta abajo</p>
+        </div>
+
+          <!-- Instrucciones para el cliente -->
+        <div style="margin-top: 40px; padding: 25px; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-left: 5px solid #001489;">
+            <h3 style="color: #001489; margin-bottom: 20px; display: flex; align-items: center; font-size: 1.4em;">
+                💎 Cómo usar tu asistente de joyería
+            </h3>
+            
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: #C9A961; margin-bottom: 15px; font-size: 1.2em;">🔗 Especialidades de Ariel's Jewelry:</h4>
+                <ul style="color: #555; line-height: 1.8; list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 8px;">✨ <strong>Cadenas Cubanas</strong> - Auténticas, hechas a mano en nuestro taller</li>
+                    <li style="margin-bottom: 8px;">💍 <strong>Pulseras Premium</strong> - Oro de 14k y 18k de máxima calidad</li>
+                    <li style="margin-bottom: 8px;">🎨 <strong>Diseños Personalizados</strong> - Crea la pieza perfecta para ti</li>
+                    <li style="margin-bottom: 8px;">👑 <strong>Anillos Exclusivos</strong> - Diseños únicos y elegantes</li>
+                </ul>
+            </div>
+
+            <div style="background: #f8f9ff; padding: 20px; border-radius: 8px; border: 1px solid #001489; margin-bottom: 20px;">
+                <h4 style="color: #001489; margin: 0 0 15px 0; display: flex; align-items: center;">
+                    💬 Consulta por Chat de Texto:
+                </h4>
+                <ul style="color: #555; margin: 0; padding-left: 20px; line-height: 1.7;">
+                    <li><strong>Consultas instantáneas:</strong> Escribe tus preguntas sobre joyería</li>
+                    <li><strong>Asesoría especializada:</strong> Información detallada sobre nuestros productos</li>
+                    <li><strong>Diseños personalizados:</strong> Describe tu pieza ideal</li>
+                    <li><strong>Atención 24/7:</strong> Disponible cuando lo necesites</li>
+                </ul>
+            </div>
+
+
+
+        <!-- Chat container (pantalla completa) -->
+        <div id="n8n-chat" style="height: 600px; width: 100%; max-width: 800px; margin: 0 auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); overflow: hidden;"></div>
+
+    <br>
+            <div style="background: linear-gradient(135deg, #C9A961 0%, #B8963E 100%); padding: 20px; border-radius: 8px; color: white; text-align: center;">
+                <h4 style="margin: 0 0 10px 0; font-size: 1.1em;">✨ Más de 30 años creando sueños en oro ✨</h4>
+                <p style="margin: 0; opacity: 0.95; font-size: 0.95em;">
+                    Desde cadenas cubanas auténticas hasta diseños únicos, 
+                    cada pieza cuenta una historia de calidad y pasión.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+        // Inicializar chat (solo texto)
+        const webhookUrl = 'https://jossuehn.app.n8n.cloud/webhook/7aa61307-d9d3-42b6-963b-823f9701adf4'; // Reemplaza con tu URL real
+        window.chatWebhookUrl = webhookUrl;
+
+        createChat({
+            webhookUrl: webhookUrl,
+            
+            // Chat configuration - abierto automáticamente
+            target: '#n8n-chat',
+            mode: 'fullscreen',  // Cambiado a fullscreen para que aparezca abierto
+            loadPreviousSession: true,
+            showWelcomeScreen: false,  // Deshabilitado para carga automática
+            
+            // Mensajería específica de joyería (solo texto)
+            initialMessages: [
+                '✨ ¡Bienvenido a Ariel\'s Jewelry! ✨',
+                '¿Como podemos ayudarlo caballero/dama super elegante?.',
+            ],
+            
+            // Internacionalización en español
+            i18n: {
+                en: {
+                    title: '💎 Ariel\'s Jewelry',
+                    subtitle: 'Cadenas Cubanas Premium • Diseños Personalizados • Consultoría Experta',
+                    footer: 'Powered by Ariel\'s Jewelry',
+                    getStarted: 'Comenzar Compra',
+                    inputPlaceholder: 'Escribe tu consulta....',
+                },
+            },
+            
+            // Additional configuration
+            chatInputKey: 'chatInput',
+            chatSessionKey: 'sessionId',
+            defaultLanguage: 'en',
+            
+            // Habilitar subida de archivos (solo imágenes para referencias)
+            allowFileUploads: true,
+            allowedFilesMimeTypes: 'image/*',
+            
+            // Webhook configuration
+            webhookConfig: {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            },
+            
+            // Metadatos del chat
+            metadata: {
+                source: 'sitio_web_joyeria',
+                business: 'ariels_jewelry',
+                department: 'atencion_al_cliente',
+                chatType: 'text_only',
+                language: 'spanish'
+            }
+        });
+    </script>
+</body>
+</html>
