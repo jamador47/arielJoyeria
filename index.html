@@ -27,23 +27,23 @@
 
             /* Layout */
             --chat--spacing: 1rem;
-            --chat--border-radius: 8px;
+            --chat--border-radius: 12px; 
             --chat--transition-duration: 0.3s;
 
             /* Window dimensions - ajustado para pantalla completa */
             --chat--window--width: 100%;
             --chat--window--height: 100%;
 
-            /* Header styling */
-            --chat--header-height: auto;
-            --chat--header--padding: 1.5rem 1rem;
+            /* Header styling - ADJUSTED FOR SMALLER SIZE */
+            --chat--header-height: auto; /* Still auto, but content inside will be smaller */
+            --chat--header--padding: 1rem 1rem; /* Reduced padding */
             --chat--header--background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-primary-shade-50) 100%);
             --chat--header--color: var(--chat--color-white);
             --chat--header--border-top: none;
             --chat--header--border-bottom: 3px solid var(--chat--color-secondary);
-            --chat--heading--font-size: 1.5em;
-            --chat--subtitle--font-size: 0.9em;
-            --chat--subtitle--line-height: 1.6;
+            --chat--heading--font-size: 1.4em; /* Slightly smaller */
+            --chat--subtitle--font-size: 0.85em; /* Slightly smaller */
+            --chat--subtitle--line-height: 1.5; /* Slightly tighter line height */
 
             /* Input area */
             --chat--textarea--height: 60px;
@@ -67,7 +67,7 @@
             /* Code blocks */
             --chat--message--pre--background: rgba(0, 0, 0, 0.05);
 
-            /* Toggle button */
+            /* Toggle button (not used in fullscreen mode but good to keep consistent) */
             --chat--toggle--background: var(--chat--color-secondary);
             --chat--toggle--hover--background: var(--chat--color-secondary-shade-50);
             --chat--toggle--active--background: #A8853A;
@@ -75,18 +75,31 @@
             --chat--toggle--size: 70px;
         }
 
-        /* Additional custom styles */
+        /* General body styling */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f5f5f5;
             margin: 0;
-            padding: 20px;
+            padding: 20px 0; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; 
         }
 
-        /* Logo styling */
+        /* Main content wrapper */
+        .main-wrapper {
+            max-width: 900px; 
+            margin: 0 auto;
+            padding: 0 15px; 
+            flex-grow: 1; 
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Logo styling for the chat header (if it were to show a logo) */
         .chat-header-logo {
             width: 50px;
-            height: 50px;
+            height: 20px;
             margin-right: 12px;
             border-radius: 6px;
             object-fit: contain;
@@ -97,187 +110,285 @@
         /* Brand header with logo */
         .brand-header {
             display: flex;
+            flex-direction: column; 
             align-items: center;
             justify-content: center;
             margin-bottom: 30px;
-            padding: 20px;
-            background: linear-gradient(135deg, #001489 0%, #001366 100%);
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 20, 137, 0.3);
+            padding: 25px 20px; 
+            background: linear-gradient(135deg, var(--chat--color-primary) 0%, var(--chat--color-primary-shade-50) 100%);
+            border-radius: var(--chat--border-radius);
+            box-shadow: 0 8px 25px rgba(0, 20, 137, 0.35); 
+            text-align: center; 
         }
 
         .brand-logo {
-            width: 120px;
-            height: 120px;
-            margin-right: 15px;
+            width: 100px; 
+            height: 100px;
+            margin-bottom: 15px; 
             object-fit: contain;
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
+            background: var(--chat--color-white);
+            padding: 10px; 
+            border-radius: 50%; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            animation: sparkle 2s ease-in-out infinite; 
         }
 
-        /* Asegurar que el chat de pantalla completa funcione correctamente */
+        .brand-header h1 {
+            color: var(--chat--color-white);
+            font-size: 1.8em; 
+            margin: 0 0 5px 0;
+            letter-spacing: 0.8px;
+        }
+
+        .brand-header p {
+            color: var(--chat--color-light);
+            font-size: 1em;
+            margin: 0;
+            line-height: 1.5;
+            max-width: 90%; 
+        }
+
+        /* Introductory text before the chat */
+        .intro-text {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--chat--color-dark);
+            padding: 0 10px; 
+        }
+
+        .intro-text p:first-of-type {
+            font-size: 1.3em; 
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--chat--color-primary); 
+        }
+
+        .intro-text p:last-of-type {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        /* "How to use" instructions section */
+        .instructions-section {
+            margin-top: 20px; 
+            padding: 25px;
+            background: var(--chat--color-white);
+            border-radius: var(--chat--border-radius);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1); 
+            border-left: 5px solid var(--chat--color-secondary); 
+            margin-bottom: 30px; 
+        }
+
+        .instructions-section h3 {
+            color: var(--chat--color-primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 1.5em; 
+            gap: 10px; 
+            font-weight: 600;
+        }
+
+        .instruction-card {
+            background: var(--chat--color-light); 
+            padding: 20px;
+            border-radius: var(--chat--border-radius);
+            border: 1px solid var(--chat--color-medium); 
+            margin-bottom: 20px;
+            transition: all 0.3s ease; 
+        }
+
+        .instruction-card:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .instruction-card h4 {
+            color: var(--chat--color-primary);
+            margin: 0 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px; 
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+
+        .instruction-card ul {
+            color: var(--chat--color-dark);
+            margin: 0;
+            padding-left: 20px;
+            line-height: 1.7;
+            list-style: none; 
+        }
+
+        .instruction-card ul li {
+            position: relative;
+            padding-left: 20px; 
+            margin-bottom: 8px;
+        }
+
+        .instruction-card ul li:last-child {
+            margin-bottom: 0;
+        }
+
+        .instruction-card ul li::before {
+            content: '•'; 
+            color: var(--chat--color-secondary); 
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .instruction-card ul li strong {
+            color: var(--chat--color-primary-shade-50); 
+        }
+
+        /* N8N Chat container */
         #n8n-chat {
             width: 100% !important;
-            height: 600px !important;
+            height: 65vh !important; 
             max-width: 800px;
-            margin: 0 auto;
+            margin: 0 auto 30px auto; 
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            border-radius: 12px;
+            border-radius: var(--chat--border-radius);
             overflow: hidden;
-            background: white;
+            background: var(--chat--color-white);
+            flex-shrink: 0; 
         }
 
         /* Elegant typography for jewelry brand */
         .n8n-chat-title {
             font-weight: 600;
             letter-spacing: 0.5px;
+            font-size: var(--chat--heading--font-size); 
         }
 
         .n8n-chat-subtitle {
             opacity: 0.9;
             font-weight: 300;
+            font-size: var(--chat--subtitle--font-size); 
         }
 
         /* Sparkle animation for luxury feel */
         @keyframes sparkle {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.1); }
+            50% { opacity: 0.8; transform: scale(1.05); } 
         }
 
         .chat-sparkle {
             animation: sparkle 2s ease-in-out infinite;
         }
 
-        /* Voice recording button styles */
-        .voice-recorder {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
+        /* Media queries for better mobile experience */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px 0;
+            }
 
-        .voice-btn {
-            background: var(--chat--color-secondary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            font-size: 20px;
-        }
+            .main-wrapper {
+                padding: 0 10px;
+            }
 
-        .voice-btn:hover {
-            background: var(--chat--color-secondary-shade-50);
-            transform: scale(1.05);
-        }
+            .brand-header {
+                padding: 20px 15px;
+                margin-bottom: 25px;
+            }
 
-        .voice-btn.recording {
-            background: #e74c3c;
-            animation: pulse 1s infinite;
-        }
+            .brand-logo {
+                width: 90px;
+                height: 90px;
+                margin-bottom: 10px;
+            }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
+            .brand-header h1 {
+                font-size: 1.6em;
+            }
 
-        .voice-status {
-            font-size: 12px;
-            color: var(--chat--color-dark);
-            margin-left: 10px;
-        }
+            .brand-header p {
+                font-size: 0.9em;
+            }
 
-        .audio-player {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            background: var(--chat--color-light);
-            border-radius: 8px;
-            margin: 5px 0;
-        }
+            .intro-text {
+                margin-bottom: 25px;
+            }
 
-        .audio-controls {
-            display: flex;
-            gap: 5px;
-        }
+            .intro-text p:first-of-type {
+                font-size: 1.1em;
+            }
 
-        .audio-controls button {
-            background: var(--chat--color-secondary);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 5px 10px;
-            cursor: pointer;
-            font-size: 12px;
+            .intro-text p:last-of-type {
+                font-size: 0.9em;
+            }
+
+            .instructions-section {
+                padding: 20px;
+                margin-bottom: 25px;
+            }
+
+            .instructions-section h3 {
+                font-size: 1.3em;
+            }
+
+            .instruction-card {
+                padding: 15px;
+            }
+
+            .instruction-card h4 {
+                font-size: 1.1em;
+            }
+
+            .instruction-card ul {
+                font-size: 0.9em;
+            }
+
+            #n8n-chat {
+                height: 70vh !important; 
+                margin-bottom: 20px;
+            }
+
+            /* Further adjustments for chat header on very small screens if needed */
+            :root {
+                --chat--header--padding: 0.8rem 1rem; /* Even smaller padding on mobile */
+                --chat--heading--font-size: 1.3em;
+                --chat--subtitle--font-size: 0.8em;
+            }
         }
     </style>
 </head>
 <body>
-    <div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
-        <!-- Brand Header with Logo -->
+    <div class="main-wrapper">
         <div class="brand-header">
             <img src="https://arielsjewelry.com/cdn/shop/files/Ariel_s_Logo_small_11ae5a6a-ab2d-4a42-b5ac-c069070394bf.jpg?v=1690913917&width=220" 
                  alt="Ariel's Jewelry Logo" 
-                 class="brand-logo"
-                 style="margin: 0;">
+                 class="brand-logo">
+            <h1>Ariel's Jewelry</h1>
+            <p>Tu asistente personalizado para joyería de lujo.</p>
         </div>
         
-        <div style="text-align: center; margin-bottom: 40px; color: #555;">
-            <p style="font-size: 1.2em; margin-bottom: 10px;">Experimenta joyería de lujo con asistencia personalizada</p>
-            <p style="font-size: 1em; opacity: 0.8;">El chat está listo para comenzar - escribe tu consulta abajo</p>
+        <div class="intro-text">
+            <p>Experimenta joyería de lujo con asistencia personalizada</p>
+            <p>El chat está listo para comenzar - escribe tu consulta abajo</p>
         </div>
 
-          <!-- Instrucciones para el cliente -->
-        <div style="margin-top: 40px; padding: 25px; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-left: 5px solid #001489;">
-            <h3 style="color: #001489; margin-bottom: 20px; display: flex; align-items: center; font-size: 1.4em;">
+        <div class="instructions-section">
+            <h3>
                 💎 Cómo usar tu asistente de joyería
             </h3>
             
-            <div style="margin-bottom: 25px;">
-                <h4 style="color: #C9A961; margin-bottom: 15px; font-size: 1.2em;">🔗 Especialidades de Ariel's Jewelry:</h4>
-                <ul style="color: #555; line-height: 1.8; list-style: none; padding-left: 0;">
-                    <li style="margin-bottom: 8px;">✨ <strong>Cadenas Cubanas</strong> - Auténticas, hechas a mano en nuestro taller</li>
-                    <li style="margin-bottom: 8px;">💍 <strong>Pulseras Premium</strong> - Oro de 14k y 18k de máxima calidad</li>
-                    <li style="margin-bottom: 8px;">🎨 <strong>Diseños Personalizados</strong> - Crea la pieza perfecta para ti</li>
-                    <li style="margin-bottom: 8px;">👑 <strong>Anillos Exclusivos</strong> - Diseños únicos y elegantes</li>
-                </ul>
-            </div>
-
-            <div style="background: #f8f9ff; padding: 20px; border-radius: 8px; border: 1px solid #001489; margin-bottom: 20px;">
-                <h4 style="color: #001489; margin: 0 0 15px 0; display: flex; align-items: center;">
+            <div class="instruction-card">
+                <h4>
                     💬 Consulta por Chat de Texto:
                 </h4>
-                <ul style="color: #555; margin: 0; padding-left: 20px; line-height: 1.7;">
-                    <li><strong>Consultas instantáneas:</strong> Escribe tus preguntas sobre joyería</li>
-                    <li><strong>Asesoría especializada:</strong> Información detallada sobre nuestros productos</li>
-                    <li><strong>Diseños personalizados:</strong> Describe tu pieza ideal</li>
-                    <li><strong>Atención 24/7:</strong> Disponible cuando lo necesites</li>
+                <ul>
+                    <li><strong>Consultas instantáneas:</strong> Escribe tus preguntas sobre joyería.</li>
+                    <li><strong>Asesoría especializada:</strong> Información detallada sobre nuestros productos.</li>
+                    <li><strong>Atención 24/7:</strong> Disponible cuando lo necesites.</li>
                 </ul>
             </div>
-
-
-
-        <!-- Chat container (pantalla completa) -->
-        <div id="n8n-chat" style="height: 600px; width: 100%; max-width: 800px; margin: 0 auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); overflow: hidden;"></div>
-
-    <br>
-            <div style="background: linear-gradient(135deg, #C9A961 0%, #B8963E 100%); padding: 20px; border-radius: 8px; color: white; text-align: center;">
-                <h4 style="margin: 0 0 10px 0; font-size: 1.1em;">✨ Más de 30 años creando sueños en oro ✨</h4>
-                <p style="margin: 0; opacity: 0.95; font-size: 0.95em;">
-                    Desde cadenas cubanas auténticas hasta diseños únicos, 
-                    cada pieza cuenta una historia de calidad y pasión.
-                </p>
-            </div>
         </div>
+
+        <div id="n8n-chat"></div>
     </div>
 
     <script type="module">
@@ -292,23 +403,22 @@
             
             // Chat configuration - abierto automáticamente
             target: '#n8n-chat',
-            mode: 'fullscreen',  // Cambiado a fullscreen para que aparezca abierto
+            mode: 'fullscreen',  
             loadPreviousSession: true,
-            showWelcomeScreen: false,  // Deshabilitado para carga automática
+            showWelcomeScreen: false,  
             
             // Mensajería específica de joyería (solo texto)
             initialMessages: [
                 '✨ ¡Bienvenido a Ariel\'s Jewelry! ✨',
-                '¿Como podemos ayudarlo caballero/dama super elegante?.',
+                '¿Cómo podemos ayudarlo, caballero/dama super elegante?.',
             ],
             
             // Internacionalización en español
             i18n: {
-                en: {
+                en: { 
                     title: '💎 Ariel\'s Jewelry',
                     subtitle: 'Cadenas Cubanas Premium • Diseños Personalizados • Consultoría Experta',
                     footer: 'Powered by Ariel\'s Jewelry',
-                    getStarted: 'Comenzar Compra',
                     inputPlaceholder: 'Escribe tu consulta....',
                 },
             },
@@ -316,8 +426,8 @@
             // Additional configuration
             chatInputKey: 'chatInput',
             chatSessionKey: 'sessionId',
-            defaultLanguage: 'en',
-            
+            defaultLanguage: 'en', 
+
             // Habilitar subida de archivos (solo imágenes para referencias)
             allowFileUploads: true,
             allowedFilesMimeTypes: 'image/*',
